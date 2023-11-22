@@ -27,6 +27,11 @@ def game(mode):
 
   while '_' in placeholder:
     guessed_letters = input('Guess a letter: ').lower()
+    # if guessed_letters in previously_guessed:
+    #   print('You\'ve already guessed that letter')
+    if guessed_letters in previously_guessed:
+      print('You\'ve already guessed that letter, try again')
+      continue
     previously_guessed.add(guessed_letters)
     for i in range(len(selected_word)):
       if selected_word[i] == guessed_letters:
@@ -38,7 +43,7 @@ def game(mode):
           print(f'You Lose: Your word was {selected_word}')       
           break
     print(stages[lives])
-    print(placeholder)
+    print(''.join(placeholder))
     print(f'Here are your previously guessed letters: {previously_guessed}')
     if '_' not in placeholder:
         print('You win')
