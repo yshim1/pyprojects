@@ -13,29 +13,33 @@ def select_mode():
   elif game_mode == 'h':
     return h_list
   else:
-    print('Not a valid input')
+    print('Not a valid input, try again')
+    select_mode()
 
 mode = select_mode()
 
 def game(mode):
+  previously_guessed = set()
   selected_word = random.choice(mode)
   lives = 6
   # Allow user input for a letter and lowercase the letter
   placeholder = ['_'] * len(selected_word)
 
   while '_' in placeholder:
-    guessed_letter = input('Guess a letter: ').lower()
+    guessed_letters = input('Guess a letter: ').lower()
+    previously_guessed.add(guessed_letters)
     for i in range(len(selected_word)):
-      if selected_word[i] == guessed_letter:
-        placeholder[i] = guessed_letter
-    if guessed_letter not in selected_word:
+      if selected_word[i] == guessed_letters:
+        placeholder[i] = guessed_letters
+    if guessed_letters not in selected_word:
       lives -= 1
       if lives == 0:
           print(stages[lives])
-          print('You Lose')       
+          print(f'You Lose: Your word was {selected_word}')       
           break
     print(stages[lives])
     print(placeholder)
+    print(f'Here are your previously guessed letters: {previously_guessed}')
     if '_' not in placeholder:
         print('You win')
 
